@@ -1,13 +1,57 @@
-import { AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType } from "./todolists-reducer";
 import { TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType } from "api/todolists-api";
 import { Dispatch } from "redux";
 import { AppRootStateType, AppThunk } from "app/store";
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
 import { appActions } from "app/app-reducer";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { todolistsActions } from "features/TodolistsList/todolists-reducer";
+
+const slice = createSlice({
+   name: "tasks",
+   initialState: {} as TasksStateType,
+   reducers: {
+      removeTask: (state, action: PayloadAction<{ todoId: string; taskId: string }>) => {
+         const tasks = state[action.payload.todoId];
+         const index = tasks.findIndex((t) => t.id === action.payload.taskId);
+         if (index !== -1) tasks.splice(index, 1);
+      },
+      addTask: (state, action: PayloadAction<{ task: TaskType }>) => {
+         state[action.payload.task.todoListId].unshift(action.payload.task);
+      },
+      updateTask: (
+         state,
+         action: PayloadAction<{ todoId: string; taskId: string; model: UpdateDomainTaskModelType }>
+      ) => {
+         const task = state[action.payload.todoId];
+         const index = task.findIndex((t) => t.id === action.payload.taskId);
+         if (index !== -1) task[index] = { ...task[index], ...action.payload.model };
+      },
+      setTasks: (state, action: PayloadAction<{ todoId: string; tasks: TaskType[] }>) => {
+         state[action.payload.todoId] = action.payload.tasks;
+      },
+   },
+   extraReducers: (builder) => {
+      builder
+         .addCase(todolistsActions.addTodolist, (state, action) => {
+            state[action.payload.todolist.id] = [];
+         })
+         .addCase(todolistsActions.removeTodolists, (state, action) => {
+            delete state[action.payload.id];
+         })
+         .addCase(todolistsActions.setTodolists, (state, action) => {
+            action.payload.todolists.forEach((tl) => {
+               state[tl.id] = [];
+            });
+         });
+   },
+});
+
+export const tasksReducer = slice.reducer;
+export const tasksActions = slice.actions;
 
 const initialState: TasksStateType = {};
 
-export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
+export const _tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
    switch (action.type) {
       case "REMOVE-TASK":
          return { ...state, [action.todolistId]: state[action.todolistId].filter((t) => t.id != action.taskId) };
