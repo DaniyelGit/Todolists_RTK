@@ -2,9 +2,8 @@ import React, { useCallback, useEffect } from "react";
 import "./App.css";
 import { TodolistsList } from "features/TodolistsList/TodolistsList";
 import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
-import { useDispatch, useSelector } from "react-redux";
-import { AppRootStateType, useAppSelector } from "./store";
-import { initializeAppTC, RequestStatusType } from "./app-reducer";
+import { useAppSelector } from "./store";
+import { initializeAppTC } from "./app-reducer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "features/Login/Login";
 import { logoutTC } from "features/Login/auth-reducer";
@@ -20,6 +19,8 @@ import {
 } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 import { selectAppStatus, selectIsInitialized } from "selectors/app-selectors";
+import { selectAuthIsLoggedIn } from "selectors/auth-selectors";
+import { useAppDispatch } from "hooks/useAppDispatch";
 
 type PropsType = {
    demo?: boolean;
@@ -28,8 +29,8 @@ type PropsType = {
 function App({ demo = false }: PropsType) {
    const status = useAppSelector(selectAppStatus);
    const isInitialized = useAppSelector(selectIsInitialized);
-   const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn);
-   const dispatch = useDispatch<any>();
+   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
+   const dispatch = useAppDispatch();
 
    useEffect(() => {
       dispatch(initializeAppTC());
