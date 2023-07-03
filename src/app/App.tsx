@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from "react";
 import "./App.css";
 import { TodolistsList } from "features/TodolistsList/TodolistsList";
 import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
-import { useAppSelector } from "./store";
 import { initializeAppTC } from "./app-reducer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "features/Login/Login";
@@ -21,7 +20,7 @@ import { Menu } from "@mui/icons-material";
 import { selectAppStatus, selectIsInitialized } from "selectors/app-selectors";
 import { selectAuthIsLoggedIn } from "selectors/auth-selectors";
 import { useAppDispatch } from "hooks/useAppDispatch";
-import { todolistsActions } from "features/TodolistsList/todolists-reducer";
+import { useAppSelector } from "hooks/useAppSelector";
 
 type PropsType = {
    demo?: boolean;
@@ -39,7 +38,6 @@ function App({ demo = false }: PropsType) {
 
    const logoutHandler = useCallback(() => {
       dispatch(logoutTC());
-      dispatch(todolistsActions.clearState());
    }, []);
 
    if (!isInitialized) {

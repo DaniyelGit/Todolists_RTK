@@ -3,6 +3,7 @@ import { authAPI, LoginParamsType } from "api/todolists-api";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "app/store";
 import { appActions } from "app/app-reducer";
+import { clearStateProject } from "common/actions/clearStateAction";
 
 const slice = createSlice({
    name: "auth",
@@ -46,6 +47,7 @@ export const logoutTC = (): AppThunk => (dispatch) => {
       .then((res) => {
          if (res.data.resultCode === 0) {
             dispatch(authActions.setIsLoggedIn({ value: false }));
+            dispatch(clearStateProject());
             dispatch(appActions.setStatus({ status: "succeeded" }));
          } else {
             handleServerAppError(res.data, dispatch);

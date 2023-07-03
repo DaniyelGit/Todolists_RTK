@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect } from "react";
-import { useAppSelector } from "app/store";
 import {
    todolistsActions,
    addTodolistTC,
@@ -17,6 +16,7 @@ import { Navigate } from "react-router-dom";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { selectAuthIsLoggedIn } from "selectors/auth-selectors";
 import { selectGetTasks, selectGetTodolists } from "selectors/todolists-selector";
+import { useAppSelector } from "hooks/useAppSelector";
 
 type PropsType = {
    demo?: boolean;
