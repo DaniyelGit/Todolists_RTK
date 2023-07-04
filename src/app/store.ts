@@ -5,7 +5,6 @@ import { authReducer } from "features/Login/auth-reducer";
 import { tasksReducer } from "features/TodolistsList/tasks-reducer";
 import { todolistsReducer } from "features/TodolistsList/todolists-reducer";
 import { configureStore } from "@reduxjs/toolkit";
-import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
 
 const rootReducer = combineReducers({
    tasks: tasksReducer,
