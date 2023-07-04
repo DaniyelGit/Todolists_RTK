@@ -1,5 +1,5 @@
 import { AnyAction, combineReducers } from "redux";
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { ThunkAction } from "redux-thunk";
 import { appReducer } from "./app-reducer";
 import { authReducer } from "features/Login/auth-reducer";
 import { tasksReducer } from "features/TodolistsList/tasks-reducer";

@@ -3,7 +3,7 @@ import { appActions, RequestStatusType } from "app/app-reducer";
 import { handleServerNetworkError } from "utils/error-utils";
 import { AppThunk } from "app/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchTasks } from "features/TodolistsList/tasks-reducer";
+import { fetchTasks, tasksThunks } from "features/TodolistsList/tasks-reducer";
 import { clearStateProject } from "common/actions/clearStateAction";
 
 const slice = createSlice({
@@ -57,7 +57,7 @@ export const fetchTodolistsTC = (): AppThunk => {
          })
          .then((res) => {
             res.forEach(({ id }) => {
-               dispatch(fetchTasks(id));
+               dispatch(tasksThunks.fetchTasks(id));
             });
          })
          .catch((error) => {

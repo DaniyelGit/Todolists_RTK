@@ -1,11 +1,11 @@
 import { TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType } from "api/todolists-api";
-import { AppRootStateType, AppThunk } from "app/store";
+import { AppDispatch, AppRootStateType, AppThunk } from "app/store";
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
 import { appActions } from "app/app-reducer";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { todolistsActions } from "features/TodolistsList/todolists-reducer";
 import { clearStateProject } from "common/actions/clearStateAction";
-import { AxiosError, isAxiosError } from "axios";
+import { createAppAsyncThunks } from "utils/createAppAsyncThunks";
 
 const slice = createSlice({
    name: "tasks",
@@ -51,19 +51,23 @@ const slice = createSlice({
 });
 
 // thunks
-export const fetchTasks = createAsyncThunk("tasks/fetchTasks", async (todoId: string, thunkAPI) => {
-   const { dispatch, rejectWithValue } = thunkAPI;
-   try {
-      dispatch(appActions.setStatus({ status: "loading" }));
-      const res = await todolistsAPI.getTasks(todoId);
-      const tasks = res.data.items;
-      dispatch(appActions.setStatus({ status: "succeeded" }));
-      return { tasks, todoId };
-   } catch (e: any) {
-      handleServerNetworkError(e, dispatch);
-      return rejectWithValue(null);
+
+export const fetchTasks = createAppAsyncThunks<{ tasks: TaskType[]; todoId: string }, string>(
+   "tasks/fetchTasks",
+   async (todoId, thunkAPI) => {
+      const { dispatch, rejectWithValue } = thunkAPI;
+      try {
+         dispatch(appActions.setStatus({ status: "loading" }));
+         const res = await todolistsAPI.getTasks(todoId);
+         const tasks = res.data.items;
+         dispatch(appActions.setStatus({ status: "succeeded" }));
+         return { tasks, todoId };
+      } catch (e) {
+         handleServerNetworkError(e, dispatch);
+         return rejectWithValue(null);
+      }
    }
-});
+);
 
 export const removeTaskTC =
    (taskId: string, todoId: string): AppThunk =>
