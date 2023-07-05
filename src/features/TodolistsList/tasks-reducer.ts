@@ -1,11 +1,10 @@
 import { TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType } from "api/todolists-api";
-import { AppDispatch, AppRootStateType, AppThunk } from "app/store";
+import { AppRootStateType, AppThunk } from "app/store";
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
 import { appActions } from "app/app-reducer";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { todolistsActions } from "features/TodolistsList/todolists-reducer";
 import { clearStateProject } from "common/actions/clearStateAction";
-import { createAppAsyncThunks } from "utils/createAppAsyncThunks";
 
 const slice = createSlice({
    name: "tasks",
@@ -51,8 +50,27 @@ const slice = createSlice({
 });
 
 // thunks
+const fetchTasks = createAsyncThunk<{ tasks: TaskType[]; todoId: string }, string, {}>(
+   "tasks/fetchTasks",
+   async (todoId, thunkAPI) => {
+      const { dispatch, rejectWithValue } = thunkAPI;
+      try {
+         dispatch(appActions.setStatus({ status: "loading" }));
+         // request
+         const res = await todolistsAPI.getTasks("todoId");
+         // response
+         const tasks = res.data.items;
 
-export const fetchTasks = createAppAsyncThunks<{ tasks: TaskType[]; todoId: string }, string>(
+         dispatch(appActions.setStatus({ status: "succeeded" }));
+         return { tasks, todoId };
+      } catch (e) {
+         handleServerNetworkError(e, dispatch);
+         return rejectWithValue(null);
+      }
+   }
+);
+
+/*export const fetchTasks = createAppAsyncThunks<{ tasks: TaskType[]; todoId: string }, string>(
    "tasks/fetchTasks",
    async (todoId, thunkAPI) => {
       const { dispatch, rejectWithValue } = thunkAPI;
@@ -67,7 +85,7 @@ export const fetchTasks = createAppAsyncThunks<{ tasks: TaskType[]; todoId: stri
          return rejectWithValue(null);
       }
    }
-);
+);*/
 
 export const removeTaskTC =
    (taskId: string, todoId: string): AppThunk =>
@@ -147,5 +165,3 @@ export type TasksStateType = {
 export const tasksReducer = slice.reducer;
 export const tasksActions = slice.actions;
 export const tasksThunks = { fetchTasks };
-
-console.log(slice);

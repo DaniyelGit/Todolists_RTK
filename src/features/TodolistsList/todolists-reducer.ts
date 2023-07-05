@@ -1,10 +1,11 @@
-import { todolistsAPI, TodolistType } from "api/todolists-api";
+import { TaskType, todolistsAPI, TodolistType } from "api/todolists-api";
 import { appActions, RequestStatusType } from "app/app-reducer";
 import { handleServerNetworkError } from "utils/error-utils";
 import { AppThunk } from "app/store";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchTasks, tasksThunks } from "features/TodolistsList/tasks-reducer";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { tasksThunks } from "features/TodolistsList/tasks-reducer";
 import { clearStateProject } from "common/actions/clearStateAction";
+import { createAppAsyncThunks } from "utils/createAppAsyncThunks";
 
 const slice = createSlice({
    name: "todolists",
@@ -45,6 +46,7 @@ export const todolistsReducer = slice.reducer;
 export const todolistsActions = slice.actions;
 
 // thunks
+
 export const fetchTodolistsTC = (): AppThunk => {
    return (dispatch) => {
       dispatch(appActions.setStatus({ status: "loading" }));
@@ -55,7 +57,7 @@ export const fetchTodolistsTC = (): AppThunk => {
             dispatch(appActions.setStatus({ status: "succeeded" }));
             return res.data;
          })
-         .then((res) => {
+         .then((res: TodolistType[]) => {
             res.forEach(({ id }) => {
                dispatch(tasksThunks.fetchTasks(id));
             });
