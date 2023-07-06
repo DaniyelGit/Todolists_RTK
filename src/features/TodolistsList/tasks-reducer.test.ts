@@ -1,5 +1,5 @@
 import { tasksActions, tasksReducer, TasksStateType, tasksThunks } from "./tasks-reducer";
-import { TaskPriorities, TaskStatuses, UpdateTaskArgType } from "api/todolists-api";
+import { TaskPriorities, TaskStatuses, UpdateTaskArgType } from "common/api/todolists-api";
 import { todolistsActions } from "features/TodolistsList/todolists-reducer";
 
 let startState: TasksStateType = {};

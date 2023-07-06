@@ -120,3 +120,9 @@ export type UpdateTaskArgType = {
    taskId: string;
    domainModel: UpdateDomainTaskModelType;
 };
+
+export enum ResultCode {
+   OK = 0,
+   ERROR = 1,
+   CAPTCHA = 10,
+}

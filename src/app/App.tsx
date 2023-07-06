@@ -19,8 +19,8 @@ import {
 import { Menu } from "@mui/icons-material";
 import { selectAppStatus, selectIsInitialized } from "selectors/app-selectors";
 import { selectAuthIsLoggedIn } from "selectors/auth-selectors";
-import { useAppDispatch } from "hooks/useAppDispatch";
-import { useAppSelector } from "hooks/useAppSelector";
+import { useAppDispatch } from "common/hooks/useAppDispatch";
+import { useAppSelector } from "common/hooks/useAppSelector";
 
 type PropsType = {
    demo?: boolean;

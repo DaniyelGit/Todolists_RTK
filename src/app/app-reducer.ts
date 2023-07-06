@@ -1,4 +1,4 @@
-import { authAPI } from "api/todolists-api";
+import { authAPI } from "common/api/todolists-api";
 import { authActions } from "features/Login/auth-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "app/store";
