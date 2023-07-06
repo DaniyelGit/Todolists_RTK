@@ -1,5 +1,5 @@
 import { tasksActions, tasksReducer, TasksStateType, tasksThunks } from "./tasks-reducer";
-import { AddTasksArgType, TaskPriorities, TaskStatuses } from "api/todolists-api";
+import { TaskPriorities, TaskStatuses, UpdateTaskArgType } from "api/todolists-api";
 import { todolistsActions } from "features/TodolistsList/todolists-reducer";
 
 let startState: TasksStateType = {};
@@ -121,7 +121,13 @@ test("correct task should be added to correct array", () => {
    expect(endState["todolistId2"][0].status).toBe(TaskStatuses.New);
 });
 test("status of specified task should be changed", () => {
-   const action = tasksActions.updateTask({ taskId: "2", model: { status: TaskStatuses.New }, todoId: "todolistId2" });
+   let args: UpdateTaskArgType = {
+      todoId: "todolistId2",
+      taskId: "2",
+      domainModel: { status: TaskStatuses.New },
+   };
+
+   const action = tasksThunks.updateTask.fulfilled(args, "requestId", args);
 
    const endState = tasksReducer(startState, action);
 
@@ -129,7 +135,13 @@ test("status of specified task should be changed", () => {
    expect(endState["todolistId2"][1].status).toBe(TaskStatuses.New);
 });
 test("title of specified task should be changed", () => {
-   const action = tasksActions.updateTask({ taskId: "2", model: { title: "yogurt" }, todoId: "todolistId2" });
+   let args: UpdateTaskArgType = {
+      todoId: "todolistId2",
+      taskId: "2",
+      domainModel: { title: "yogurt" },
+   };
+
+   const action = tasksThunks.updateTask.fulfilled(args, "requestId", args);
    const endState = tasksReducer(startState, action);
 
    expect(endState["todolistId1"][1].title).toBe("JS");
