@@ -5,7 +5,7 @@ import {
    changeTodolistTitleTC,
    fetchTodolistsTC,
    FilterValuesType,
-   removeTodolistTC,
+   todolistsThunk,
 } from "./todolists-reducer";
 import { tasksThunks } from "./tasks-reducer";
 import { Grid, Paper } from "@mui/material";
@@ -58,8 +58,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
    }, []);
 
    const removeTodolist = useCallback(function (id: string) {
-      const thunk = removeTodolistTC(id);
-      dispatch(thunk);
+      dispatch(todolistsThunk.removeTodolist(id));
    }, []);
 
    const changeTodolistTitle = useCallback(function (id: string, title: string) {
