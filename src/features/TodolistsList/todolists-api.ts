@@ -1,6 +1,7 @@
 import { AddTasksArgType, RemoveTaskArgType, UpdateDomainTaskModelType } from "features/TodolistsList/tasks-reducer";
 import { instance, ResponseType } from "common/api/common-api";
 import { TaskPriorities, TaskStatuses } from "common/enums";
+import { ChangeTodoTitleArgType } from "features/TodolistsList/todolists-reducer";
 
 export const todolistsAPI = {
    getTodolists() {
@@ -12,8 +13,8 @@ export const todolistsAPI = {
    deleteTodolist(id: string) {
       return instance.delete<ResponseType>(`todo-lists/${id}`);
    },
-   updateTodolist(id: string, title: string) {
-      return instance.put<ResponseType>(`todo-lists/${id}`, { title: title });
+   updateTodolist({ todoId, newTitle }: ChangeTodoTitleArgType) {
+      return instance.put<ResponseType>(`todo-lists/${todoId}`, { title: newTitle });
    },
    getTasks(todolistId: string) {
       return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`);

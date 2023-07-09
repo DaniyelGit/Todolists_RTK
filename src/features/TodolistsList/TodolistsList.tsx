@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { todolistsActions, changeTodolistTitleTC, FilterValuesType, todolistsThunk } from "./todolists-reducer";
+import { todolistsActions, FilterValuesType, todolistsThunk } from "./todolists-reducer";
 import { tasksThunks } from "./tasks-reducer";
 import { Grid, Paper } from "@mui/material";
 import { AddItemForm } from "common/components/AddItemForm/AddItemForm";
@@ -53,9 +53,8 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
       dispatch(todolistsThunk.removeTodolist(id));
    }, []);
 
-   const changeTodolistTitle = useCallback(function (id: string, title: string) {
-      const thunk = changeTodolistTitleTC(id, title);
-      dispatch(thunk);
+   const changeTodolistTitle = useCallback(function (todoId: string, newTitle: string) {
+      dispatch(todolistsThunk.changeTodolistTitle({ todoId, newTitle }));
    }, []);
 
    const addTodolist = useCallback(
