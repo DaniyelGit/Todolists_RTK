@@ -34,7 +34,7 @@ const slice = createSlice({
          .addCase(todolistsThunk.removeTodolist.fulfilled, (state, action) => {
             delete state[action.payload.todoId];
          })
-         .addCase(todolistsActions.setTodolists, (state, action) => {
+         .addCase(todolistsThunk.fetchTodolists.fulfilled, (state, action) => {
             action.payload.todolists.forEach((tl) => {
                state[tl.id] = [];
             });

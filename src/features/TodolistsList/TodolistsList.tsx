@@ -3,7 +3,6 @@ import {
    todolistsActions,
    addTodolistTC,
    changeTodolistTitleTC,
-   fetchTodolistsTC,
    FilterValuesType,
    todolistsThunk,
 } from "./todolists-reducer";
@@ -33,8 +32,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
       if (demo || !isLoggedIn) {
          return;
       }
-      const thunk = fetchTodolistsTC();
-      dispatch(thunk);
+      dispatch(todolistsThunk.fetchTodolists());
    }, []);
 
    const removeTask = useCallback(function (taskId: string, todoId: string) {
