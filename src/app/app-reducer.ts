@@ -34,6 +34,7 @@ export const initializeAppTC = (): AppThunk => (dispatch) => {
       if (res.data.resultCode === ResultCode.OK) {
          dispatch(authActions.setIsLoggedIn({ value: true }));
       } else {
+
       }
 
       dispatch(appActions.setIsInitialized({ value: true }));

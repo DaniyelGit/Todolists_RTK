@@ -1,5 +1,4 @@
 import { appActions, RequestStatusType } from "app/app-reducer";
-import { AppThunk } from "app/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { tasksThunks } from "features/TodolistsList/tasks-reducer";
 import { clearStateProject } from "common/actions/clearStateAction";
