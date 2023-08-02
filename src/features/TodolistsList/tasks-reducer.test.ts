@@ -109,11 +109,12 @@ test("correct task should be added to correct array", () => {
       startDate: "",
       id: "id exists",
    };
-
-   const action = tasksThunks.addTask.fulfilled({ task }, "requestId", {
-      title: task.title,
-      todoId: task.todoListId,
-   });
+   const action = {
+      type: tasksThunks.addTask.fulfilled.type,
+      payload: {
+         task,
+      },
+   };
 
    const endState = tasksReducer(startState, action);
 
