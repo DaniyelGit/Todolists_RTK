@@ -16,7 +16,7 @@ const slice = createSlice({
             state[action.payload.todoId] = action.payload.tasks;
          })
          .addCase(addTask.fulfilled, (state, action) => {
-            state[action.payload.todoId].unshift(action.payload.task);
+            state[action.payload.task.todoListId].unshift(action.payload.task);
          })
          .addCase(updateTask.fulfilled, (state, action) => {
             const tasks = state[action.payload.todoId];
@@ -64,29 +64,26 @@ const fetchTasks = createAppAsyncThunks<{ tasks: TaskType[]; todoId: string }, s
    }
 );
 
-const addTask = createAppAsyncThunks<{ task: TaskType; todoId: string }, AddTasksArgType>(
-   "tasks/addTask",
-   async (arg, thunkAPI) => {
-      const { dispatch, rejectWithValue } = thunkAPI;
+const addTask = createAppAsyncThunks<{ task: TaskType }, AddTasksArgType>("tasks/addTask", async (arg, thunkAPI) => {
+   const { dispatch, rejectWithValue } = thunkAPI;
 
-      try {
-         dispatch(appActions.setStatus({ status: "loading" }));
-         const res = await todolistsAPI.createTask(arg);
+   try {
+      dispatch(appActions.setStatus({ status: "loading" }));
+      const res = await todolistsAPI.createTask(arg);
 
-         if (res.data.resultCode === ResultCode.OK) {
-            const task = res.data.data.item;
-            dispatch(appActions.setStatus({ status: "succeeded" }));
-            return { task, todoId: arg.todoId };
-         } else {
-            handleServerAppError(res.data, dispatch);
-            return rejectWithValue(null);
-         }
-      } catch (e) {
-         handleServerNetworkError(e, dispatch);
+      if (res.data.resultCode === ResultCode.OK) {
+         const task = res.data.data.item;
+         dispatch(appActions.setStatus({ status: "succeeded" }));
+         return { task };
+      } else {
+         handleServerAppError(res.data, dispatch);
          return rejectWithValue(null);
       }
+   } catch (e) {
+      handleServerNetworkError(e, dispatch);
+      return rejectWithValue(null);
    }
-);
+});
 
 const removeTask = createAppAsyncThunks<RemoveTaskArgType, RemoveTaskArgType>(
    "tasks/removeTask",

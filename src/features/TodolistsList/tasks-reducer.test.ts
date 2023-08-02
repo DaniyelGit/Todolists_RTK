@@ -110,7 +110,7 @@ test("correct task should be added to correct array", () => {
       id: "id exists",
    };
 
-   const action = tasksThunks.addTask.fulfilled({ task, todoId: "todolistId2" }, "requestId", {
+   const action = tasksThunks.addTask.fulfilled({ task }, "requestId", {
       title: task.title,
       todoId: task.todoListId,
    });
