@@ -32,9 +32,8 @@ export const appActions = slice.actions;
 export const initializeAppTC = (): AppThunk => (dispatch) => {
    authAPI.me().then((res) => {
       if (res.data.resultCode === ResultCode.OK) {
-         dispatch(authActions.setIsLoggedIn({ value: true }));
+         dispatch(authActions.setIsLoggedIn({ isLoggedIn: true }));
       } else {
-
       }
 
       dispatch(appActions.setIsInitialized({ value: true }));
