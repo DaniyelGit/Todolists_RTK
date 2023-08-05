@@ -49,7 +49,7 @@ export const loginTC = createAppAsyncThunks<{ isLoggedIn: boolean }, LoginParams
    }
 );
 
-export const logoutTC = createAppAsyncThunks<{ isLoggedIn: boolean }, void>("auth/logout", async (_, thunkAPI) => {
+export const logoutTC = createAppAsyncThunks<{ isLoggedIn: boolean }, undefined>("auth/logout", async (_, thunkAPI) => {
    const { dispatch, rejectWithValue } = thunkAPI;
 
    try {
@@ -69,7 +69,7 @@ export const logoutTC = createAppAsyncThunks<{ isLoggedIn: boolean }, void>("aut
    }
 });
 
-export const initializeAppTC = createAppAsyncThunks<{ isLoggedIn: boolean }, void>(
+export const initializeAppTC = createAppAsyncThunks<{ isLoggedIn: boolean }, undefined>(
    "app/initializedApp",
    async (_, thunkAPI) => {
       const { dispatch, rejectWithValue } = thunkAPI;
