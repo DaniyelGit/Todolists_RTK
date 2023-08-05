@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import { authThunks, loginTC } from "features/auth/auth-reducer";
+import { authThunks } from "features/auth/auth-reducer";
 import { Navigate } from "react-router-dom";
 import { useAppDispatch } from "common/hooks/useAppDispatch";
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from "@mui/material";
@@ -13,25 +13,25 @@ export const Login = () => {
    const isLoggedIn = useAppSelector<boolean>(selectAuthIsLoggedIn);
 
    const formik = useFormik({
-      validate: (values) => {
-         if (!values.email) {
-            return {
-               email: "Email is required",
-            };
-         }
-         if (!values.password) {
-            return {
-               password: "Password is required",
-            };
-         }
-      },
       initialValues: {
          email: "",
          password: "",
          rememberMe: false,
       },
+      validate: (values) => {
+         const errors: FormikErrorsType = {};
+
+         if (!values.email) {
+            errors.email = "Email is required";
+         }
+         if (!values.password) {
+            errors.password = "Password is required";
+         }
+         return errors;
+      },
       onSubmit: (values) => {
          dispatch(authThunks.loginTC(values));
+         formik.resetForm();
       },
    });
 
@@ -57,14 +57,14 @@ export const Login = () => {
                   </FormLabel>
                   <FormGroup>
                      <TextField label="Email" margin="normal" {...formik.getFieldProps("email")} />
-                     {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                     {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}
                      <TextField
                         type="password"
                         label="Password"
                         margin="normal"
                         {...formik.getFieldProps("password")}
                      />
-                     {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+                     {formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}
                      <FormControlLabel
                         label={"Remember me"}
                         control={
@@ -80,4 +80,9 @@ export const Login = () => {
          </Grid>
       </Grid>
    );
+};
+
+type FormikErrorsType = {
+   email?: string;
+   password?: string;
 };

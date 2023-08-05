@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { appActions } from "app/app-reducer";
 import { clearStateProject } from "common/actions/clearStateAction";
 import { createAppAsyncThunks, handleServerAppError, handleServerNetworkError } from "common/utils";
@@ -79,7 +79,7 @@ export const initializeAppTC = createAppAsyncThunks<{ isLoggedIn: boolean }, und
          if (res.data.resultCode === ResultCode.OK) {
             return { isLoggedIn: true };
          } else {
-            handleServerAppError(res.data, dispatch);
+            // handleServerAppError(res.data, dispatch);
             return rejectWithValue(null);
          }
       } catch (e) {
