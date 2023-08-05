@@ -5,7 +5,7 @@ import { ErrorSnackbar } from "common/components/ErrorSnackbar/ErrorSnackbar";
 import { initializeAppTC } from "./app-reducer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "features/auth/Login";
-import { logoutTC } from "features/auth/auth-reducer";
+import { authThunks } from "features/auth/auth-reducer";
 import {
    AppBar,
    Button,
@@ -37,7 +37,7 @@ function App({ demo = false }: PropsType) {
    }, []);
 
    const logoutHandler = useCallback(() => {
-      dispatch(logoutTC());
+      dispatch(authThunks.logoutTC());
    }, []);
 
    if (!isInitialized) {
