@@ -9,8 +9,15 @@ export const instance = axios.create({
 });
 
 // types
+
+type FieldErrorsType = {
+   error: string;
+   field: string;
+};
+
 export type ResponseType<D = {}> = {
    resultCode: number;
    messages: Array<string>;
    data: D;
+   fieldsErrors: FieldErrorsType[];
 };

@@ -1,9 +1,4 @@
-import { authActions } from "features/auth/auth-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppThunk } from "app/store";
-import { authAPI } from "features/auth/auth-api";
-import { ResultCode } from "common/enums";
-import { createAppAsyncThunks, handleServerAppError, handleServerNetworkError } from "common/utils";
 
 const initialState = {
    status: "idle" as RequestStatusType,

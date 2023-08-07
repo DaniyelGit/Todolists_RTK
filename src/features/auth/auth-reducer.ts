@@ -40,7 +40,7 @@ export const loginTC = createAppAsyncThunks<{ isLoggedIn: boolean }, LoginParams
             return { isLoggedIn: true };
          } else {
             handleServerAppError(res.data, dispatch);
-            return rejectWithValue(null);
+            return rejectWithValue(res.data);
          }
       } catch (e) {
          handleServerNetworkError(e, dispatch);
