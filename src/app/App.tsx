@@ -29,6 +29,7 @@ function App({ demo = false }: PropsType) {
    const status = useAppSelector(selectAppStatus);
    const isInitialized = useAppSelector(selectIsInitialized);
    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
+
    const dispatch = useAppDispatch();
 
    useEffect(() => {
