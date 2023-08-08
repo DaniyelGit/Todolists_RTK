@@ -16,6 +16,6 @@ test("correct error message should be set", () => {
 });
 
 test("correct status should be set", () => {
-   const endState = appReducer(startState, appActions.setStatus({ status: "loading" }));
+   const endState = appReducer(startState, appActions.setAppStatus({ status: "loading" }));
    expect(endState.status).toBe("loading");
 });
