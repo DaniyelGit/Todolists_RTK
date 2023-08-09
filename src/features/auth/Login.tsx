@@ -21,16 +21,21 @@ export const Login = () => {
          rememberMe: false,
       },
       validate: (values) => {
-         /* if (!values.email) {
-            return {
-               email: "Email is required",
-            };
+         const errors: FormikErrorsType = {};
+
+         if (!values.email) {
+            errors.email = "Field is required";
+         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+            errors.email = "Invalid email address";
          }
+
          if (!values.password) {
-            return {
-               password: "Password is required",
-            };
-         }*/
+            errors.password = "Field is required";
+         } else if (values.password?.trim().length < 4) {
+            errors.password = "should be more three symbols";
+         }
+
+         return errors;
       },
       onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
          dispatch(authThunks.loginTC(values))
@@ -65,14 +70,16 @@ export const Login = () => {
                   </FormLabel>
                   <FormGroup>
                      <TextField label="Email" margin="normal" {...formik.getFieldProps("email")} />
-                     {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                     {formik.touched.email && formik.errors.email ? (
+                        <div>{formik.errors.email}</div>
+                     ) : null}
                      <TextField
                         type="password"
                         label="Password"
                         margin="normal"
                         {...formik.getFieldProps("password")}
                      />
-                     {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+                     {formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}
                      <FormControlLabel
                         label={"Remember me"}
                         control={
