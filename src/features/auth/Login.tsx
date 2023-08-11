@@ -100,7 +100,6 @@ export const Login = () => {
    );
 };
 
-type FormikErrorsType = {
-   email?: string;
-   password?: string;
-};
+//types
+
+type FormikErrorsType = Partial<Omit<LoginParamsType, "captcha">>;
