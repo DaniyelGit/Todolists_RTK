@@ -4,10 +4,10 @@ import { appActions } from "app/app-reducer";
 import { BaseThunkAPI } from "@reduxjs/toolkit/dist/createAsyncThunk";
 import { ResponseType } from "common/api/common-api";
 
-export const thunkTryCatch = async (
+export const thunkTryCatch = async <T>(
    thunkAPI: BaseThunkAPI<AppRootStateType, unknown, AppDispatch, null | ResponseType>,
-   logic: Function
-) => {
+   logic: () => Promise<T>
+): Promise<T | ReturnType<typeof thunkAPI.rejectWithValue>> => {
    const { dispatch, rejectWithValue } = thunkAPI;
    dispatch(appActions.setAppStatus({ status: "loading" }));
    try {
