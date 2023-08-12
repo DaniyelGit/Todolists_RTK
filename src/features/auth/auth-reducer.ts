@@ -83,5 +83,4 @@ export const initializeAppTC = createAppAsyncThunks<{ isLoggedIn: boolean }, und
 );
 
 export const authReducer = slice.reducer;
-export const authActions = slice.actions;
 export const authThunks = { loginTC, logoutTC, initializeAppTC };
