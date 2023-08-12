@@ -2,17 +2,17 @@ import React from "react";
 import { FormikHelpers, useFormik } from "formik";
 import { authThunks } from "features/auth/auth-reducer";
 import { Navigate } from "react-router-dom";
-import { useAppDispatch } from "common/hooks/useAppDispatch";
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from "@mui/material";
 import { selectAuthIsLoggedIn } from "features/auth/auth-selectors";
 import { useAppSelector } from "common/hooks/useAppSelector";
 import { LoginParamsType } from "features/auth/auth-api";
 import { ResponseType } from "common/api/common-api";
+import { useActions } from "common/hooks";
 
 export const Login = () => {
-   const dispatch = useAppDispatch();
-
    const isLoggedIn = useAppSelector<boolean>(selectAuthIsLoggedIn);
+
+   const { loginTC } = useActions(authThunks);
 
    const formik = useFormik({
       initialValues: {
@@ -38,7 +38,7 @@ export const Login = () => {
          return errors;
       },
       onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
-         dispatch(authThunks.loginTC(values))
+         loginTC(values)
             .unwrap()
             .catch((error: ResponseType) => {
                error.fieldsErrors?.forEach((fieldError) => {

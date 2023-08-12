@@ -5,11 +5,11 @@ import { Grid, Paper } from "@mui/material";
 import { AddItemForm } from "common/components/AddItemForm/AddItemForm";
 import { Todolist } from "./Todolist/Todolist";
 import { Navigate } from "react-router-dom";
-import { useAppDispatch } from "common/hooks/useAppDispatch";
 import { selectAuthIsLoggedIn } from "features/auth/auth-selectors";
 import { selectGetTasks, selectGetTodolists } from "features/TodolistsList/todolists-selector";
 import { useAppSelector } from "common/hooks/useAppSelector";
 import { TaskStatuses } from "common/enums";
+import { useActions } from "common/hooks";
 
 type PropsType = {
    demo?: boolean;
@@ -20,49 +20,55 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
    const tasks = useAppSelector(selectGetTasks);
    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
 
-   const dispatch = useAppDispatch();
+   const {
+      fetchTodolists: fetchTodolistsThunk,
+      changeTodolistTitle: changeTodolistTitleThunk,
+      removeTodolist: removeTodolistThunk,
+      addTodolist: addTodolistThunk,
+   } = useActions(todolistsThunk);
+
+   const { addTask: addTaskThunk, updateTask: updateTaskThunk, removeTask: removeTaskThunk } = useActions(tasksThunks);
+
+   const { changeTodolistFilter } = useActions(todolistsActions);
 
    useEffect(() => {
       if (demo || !isLoggedIn) {
          return;
       }
-      dispatch(todolistsThunk.fetchTodolists());
+      fetchTodolistsThunk();
    }, []);
 
    const removeTask = useCallback(function (taskId: string, todoId: string) {
-      dispatch(tasksThunks.removeTask({ taskId, todoId }));
+      removeTaskThunk({ todoId, taskId });
    }, []);
 
    const addTask = useCallback(function (title: string, todoId: string) {
-      dispatch(tasksThunks.addTask({ todoId, title }));
+      addTaskThunk({ todoId, title });
    }, []);
 
    const changeStatus = useCallback(function (taskId: string, status: TaskStatuses, todoId: string) {
-      dispatch(tasksThunks.updateTask({ taskId, todoId, domainModel: { status } }));
+      updateTaskThunk({ taskId, todoId, domainModel: { status } });
    }, []);
 
    const changeTaskTitle = useCallback(function (taskId: string, title: string, todoId: string) {
-      dispatch(tasksThunks.updateTask({ taskId, todoId, domainModel: { title } }));
+      updateTaskThunk({ taskId, todoId, domainModel: { title } });
    }, []);
 
    const changeFilter = useCallback(function (filter: FilterValuesType, id: string) {
-      dispatch(todolistsActions.changeTodolistFilter({ id, filter }));
+      changeTodolistFilter({ id, filter });
    }, []);
 
    const removeTodolist = useCallback(function (id: string) {
-      dispatch(todolistsThunk.removeTodolist(id));
+      removeTodolistThunk(id);
    }, []);
 
    const changeTodolistTitle = useCallback(function (todoId: string, newTitle: string) {
-      dispatch(todolistsThunk.changeTodolistTitle({ todoId, newTitle }));
+      changeTodolistTitleThunk({ todoId, newTitle });
    }, []);
 
-   const addTodolist = useCallback(
-      (title: string) => {
-         dispatch(todolistsThunk.addTodolist(title));
-      },
-      [dispatch]
-   );
+   const addTodolist = useCallback((title: string) => {
+      addTodolistThunk(title);
+   }, []);
 
    if (!isLoggedIn) {
       return <Navigate to={"/login"} />;

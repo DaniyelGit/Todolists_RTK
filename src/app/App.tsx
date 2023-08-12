@@ -20,6 +20,7 @@ import { selectAppStatus, selectIsInitialized } from "app/app-selectors";
 import { selectAuthIsLoggedIn } from "features/auth/auth-selectors";
 import { useAppDispatch } from "common/hooks/useAppDispatch";
 import { useAppSelector } from "common/hooks/useAppSelector";
+import { useActions } from "common/hooks";
 
 type PropsType = {
    demo?: boolean;
@@ -30,14 +31,14 @@ function App({ demo = false }: PropsType) {
    const isInitialized = useAppSelector(selectIsInitialized);
    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
 
-   const dispatch = useAppDispatch();
+   const { logoutTC, initializeAppTC } = useActions(authThunks);
 
    useEffect(() => {
-      dispatch(authThunks.initializeAppTC());
+      initializeAppTC();
    }, []);
 
    const logoutHandler = useCallback(() => {
-      dispatch(authThunks.logoutTC());
+      logoutTC();
    }, []);
 
    if (!isInitialized) {
