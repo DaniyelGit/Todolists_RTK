@@ -4,6 +4,7 @@ import { clearStateProject } from "common/actions/clearStateAction";
 import { createAppAsyncThunks, handleServerAppError, handleServerNetworkError } from "common/utils";
 import { authAPI, LoginParamsType } from "features/auth/auth-api";
 import { ResultCode } from "common/enums";
+import { thunkTryCatch } from "common/utils/thunk-try-catch";
 
 const slice = createSlice({
    name: "auth",
@@ -32,43 +33,32 @@ export const loginTC = createAppAsyncThunks<{ isLoggedIn: boolean }, LoginParams
    async (arg, thunkAPI) => {
       const { dispatch, rejectWithValue } = thunkAPI;
 
-      try {
-         dispatch(appActions.setAppStatus({ status: "loading" }));
+      return thunkTryCatch(thunkAPI, async () => {
          const res = await authAPI.login(arg);
          if (res.data.resultCode === ResultCode.OK) {
-            dispatch(appActions.setAppStatus({ status: "succeeded" }));
             return { isLoggedIn: true };
          } else {
-            debugger;
             const isShowAppError = !res.data.fieldsErrors.length;
             handleServerAppError(res.data, dispatch, isShowAppError);
             return rejectWithValue(res.data);
          }
-      } catch (e) {
-         handleServerNetworkError(e, dispatch);
-         return rejectWithValue(null);
-      }
+      });
    }
 );
 
 export const logoutTC = createAppAsyncThunks<{ isLoggedIn: boolean }, undefined>("auth/logout", async (_, thunkAPI) => {
    const { dispatch, rejectWithValue } = thunkAPI;
 
-   try {
-      dispatch(appActions.setAppStatus({ status: "loading" }));
+   return thunkTryCatch(thunkAPI, async () => {
       const res = await authAPI.logout();
       if (res.data.resultCode === ResultCode.OK) {
          dispatch(clearStateProject());
-         dispatch(appActions.setAppStatus({ status: "succeeded" }));
          return { isLoggedIn: false };
       } else {
          handleServerAppError(res.data, dispatch);
          return rejectWithValue(null);
       }
-   } catch (e) {
-      handleServerNetworkError(e, dispatch);
-      return rejectWithValue(null);
-   }
+   });
 });
 
 export const initializeAppTC = createAppAsyncThunks<{ isLoggedIn: boolean }, undefined>(
@@ -81,7 +71,6 @@ export const initializeAppTC = createAppAsyncThunks<{ isLoggedIn: boolean }, und
          if (res.data.resultCode === ResultCode.OK) {
             return { isLoggedIn: true };
          } else {
-            // handleServerAppError(res.data, dispatch);
             return rejectWithValue(null);
          }
       } catch (e) {
