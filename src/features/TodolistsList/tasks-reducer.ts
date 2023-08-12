@@ -50,18 +50,11 @@ const slice = createSlice({
 const fetchTasks = createAppAsyncThunks<{ tasks: TaskType[]; todoId: string }, string>(
    "tasks/fetchTasks",
    async (todoId, thunkAPI) => {
-      const { dispatch, rejectWithValue } = thunkAPI;
-      try {
-         dispatch(appActions.setAppStatus({ status: "loading" }));
-
+      return thunkTryCatch(thunkAPI, async () => {
          const res = await todolistsAPI.getTasks(todoId);
          const tasks = res.data.items;
-         dispatch(appActions.setAppStatus({ status: "succeeded" }));
          return { tasks, todoId };
-      } catch (e) {
-         handleServerNetworkError(e, dispatch);
-         return rejectWithValue(null);
-      }
+      });
    }
 );
 
@@ -85,21 +78,17 @@ const removeTask = createAppAsyncThunks<RemoveTaskArgType, RemoveTaskArgType>(
    "tasks/removeTask",
    async (arg, thunkAPI) => {
       const { dispatch, rejectWithValue } = thunkAPI;
-      try {
-         dispatch(appActions.setAppStatus({ status: "loading" }));
+
+      return thunkTryCatch(thunkAPI, async () => {
          const res = await todolistsAPI.deleteTask(arg);
 
          if (res.data.resultCode === ResultCode.OK) {
-            dispatch(appActions.setAppStatus({ status: "succeeded" }));
             return arg;
          } else {
             handleServerAppError(res.data, dispatch);
             return rejectWithValue(null);
          }
-      } catch (e) {
-         handleServerNetworkError(e, dispatch);
-         return rejectWithValue(null);
-      }
+      });
    }
 );
 
@@ -124,21 +113,16 @@ const updateTask = createAppAsyncThunks<UpdateTaskArgType, UpdateTaskArgType>(
          ...arg.domainModel,
       };
 
-      try {
-         dispatch(appActions.setAppStatus({ status: "loading" }));
+      return thunkTryCatch(thunkAPI, async () => {
          const res = await todolistsAPI.updateTask(arg.todoId, arg.taskId, apiModel);
 
          if (res.data.resultCode === ResultCode.OK) {
-            dispatch(appActions.setAppStatus({ status: "succeeded" }));
             return arg;
          } else {
             handleServerAppError(res.data, dispatch);
             return rejectWithValue(null);
          }
-      } catch (e) {
-         handleServerNetworkError(e, dispatch);
-         return rejectWithValue(null);
-      }
+      });
    }
 );
 
