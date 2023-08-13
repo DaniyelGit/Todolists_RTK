@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from "react";
 import "./App.css";
-import { TodolistsList } from "features/TodolistsList/TodolistsList";
 import { ErrorSnackbar } from "common/components/ErrorSnackbar/ErrorSnackbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "features/auth/Login";
@@ -21,6 +20,7 @@ import { selectAuthIsLoggedIn } from "features/auth/auth-selectors";
 import { useAppDispatch } from "common/hooks/useAppDispatch";
 import { useAppSelector } from "common/hooks/useAppSelector";
 import { useActions } from "common/hooks";
+import { TodolistsList } from "features/todolists-list/todolists-list";
 
 type PropsType = {
    demo?: boolean;

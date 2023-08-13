@@ -1,11 +1,11 @@
-import { appActions, RequestStatusType } from "app/app-reducer";
+import { RequestStatusType } from "app/app-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { tasksThunks } from "features/TodolistsList/tasks-reducer";
 import { clearStateProject } from "common/actions/clearStateAction";
-import { createAppAsyncThunks, handleServerAppError, handleServerNetworkError } from "common/utils";
-import { todolistsAPI, TodolistType } from "features/TodolistsList/todolists-api";
+import { createAppAsyncThunks, handleServerAppError } from "common/utils";
 import { ResultCode } from "common/enums";
 import { thunkTryCatch } from "common/utils/thunk-try-catch";
+import { tasksThunks } from "features/todolists-list/tasks/model/tasks-reducer";
+import { todolistsAPI, TodolistType } from "features/todolists-list/todolists/api/todolists.api";
 
 const slice = createSlice({
    name: "todolists",

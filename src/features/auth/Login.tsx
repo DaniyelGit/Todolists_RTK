@@ -1,52 +1,14 @@
 import React from "react";
-import { FormikHelpers, useFormik } from "formik";
-import { authThunks } from "features/auth/auth-reducer";
 import { Navigate } from "react-router-dom";
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from "@mui/material";
 import { selectAuthIsLoggedIn } from "features/auth/auth-selectors";
 import { useAppSelector } from "common/hooks/useAppSelector";
-import { LoginParamsType } from "features/auth/auth-api";
-import { ResponseType } from "common/api/common-api";
-import { useActions } from "common/hooks";
+import { useLogin } from "features/auth/lib/useLogin";
 
 export const Login = () => {
-   const isLoggedIn = useAppSelector<boolean>(selectAuthIsLoggedIn);
+   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
 
-   const { loginTC } = useActions(authThunks);
-
-   const formik = useFormik({
-      initialValues: {
-         email: "",
-         password: "",
-         rememberMe: false,
-      },
-      validate: (values) => {
-         const errors: FormikErrorsType = {};
-
-         if (!values.email) {
-            errors.email = "Field is required";
-         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-            errors.email = "Invalid email address";
-         }
-
-         if (!values.password) {
-            errors.password = "Field is required";
-         } else if (values.password?.trim().length < 4) {
-            errors.password = "should be more three symbols";
-         }
-
-         return errors;
-      },
-      onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
-         loginTC(values)
-            .unwrap()
-            .catch((error: ResponseType) => {
-               error.fieldsErrors?.forEach((fieldError) => {
-                  formikHelpers.setFieldError(fieldError.field, fieldError.error);
-               });
-            });
-      },
-   });
+   const { formik } = useLogin();
 
    if (isLoggedIn) {
       return <Navigate to={"/"} />;
@@ -99,7 +61,3 @@ export const Login = () => {
       </Grid>
    );
 };
-
-//types
-
-type FormikErrorsType = Partial<Omit<LoginParamsType, "captcha">>;
