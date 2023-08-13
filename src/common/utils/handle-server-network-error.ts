@@ -2,13 +2,17 @@ import { Dispatch } from "redux";
 import { AxiosError, isAxiosError } from "axios";
 import { appActions } from "app/app-reducer";
 
-export const handleServerNetworkError = (e: unknown, dispatch: Dispatch) => {
-   const err = e as Error | AxiosError<{ error: string }>;
+export const handleServerNetworkError = (err: unknown, dispatch: Dispatch) => {
+   let errorMessage = "Some error occurred";
+
    if (isAxiosError(err)) {
-      const error = err.message ? err.message : "Some error occurred";
-      dispatch(appActions.setError({ error }));
+      errorMessage = err.response?.data?.message || err?.message || errorMessage;
+      dispatch(appActions.setError({ error: errorMessage }));
+   } else if (err instanceof Error) {
+      errorMessage = `Native error: ${err.message}`;
    } else {
-      dispatch(appActions.setError({ error: `Native error ${err.message}` }));
+      errorMessage = JSON.stringify(err);
    }
+   dispatch(appActions.setError({ error: errorMessage }));
    dispatch(appActions.setAppStatus({ status: "failed" }));
 };
