@@ -5,7 +5,6 @@ import { ResultCode, TaskPriorities, TaskStatuses } from "common/enums";
 import { thunkTryCatch } from "common/utils/thunk-try-catch";
 import { todolistsThunk } from "features/todolists-list/todolists/model/todolists-reducer";
 import {
-   AddTasksArgType,
    RemoveTaskArgType,
    TaskType,
    UpdateDomainTaskModelType,
@@ -137,6 +136,10 @@ export type UpdateTaskArgType = {
    todoId: string;
    taskId: string;
    domainModel: UpdateDomainTaskModelType;
+};
+export type AddTasksArgType = {
+   todoId: string;
+   title: string;
 };
 
 export type TasksStateType = Record<string, TaskType[]>;

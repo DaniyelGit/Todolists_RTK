@@ -26,11 +26,6 @@ export type GetTasksResponse = {
    items: TaskType[];
 };
 
-export type AddTasksArgType = {
-   todoId: string;
-   title: string;
-};
-
 export type RemoveTaskArgType = {
    todoId: string;
    taskId: string;
