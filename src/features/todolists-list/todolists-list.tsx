@@ -32,7 +32,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
       addTodolist: addTodolistThunk,
    } = useActions(todolistsThunk);
 
-   const { addTask: addTaskThunk, updateTask: updateTaskThunk, removeTask: removeTaskThunk } = useActions(tasksThunks);
+   const { addTask: addTaskThunk, updateTask: updateTaskThunk } = useActions(tasksThunks);
 
    const { changeTodolistFilter } = useActions(todolistsActions);
 
@@ -41,10 +41,6 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
          return;
       }
       fetchTodolistsThunk();
-   }, []);
-
-   const removeTask = useCallback(function (taskId: string, todoId: string) {
-      removeTaskThunk({ todoId, taskId });
    }, []);
 
    const addTask = useCallback(function (title: string, todoId: string) {
@@ -94,7 +90,6 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
                         <Todolist
                            todolist={tl}
                            tasks={allTodolistTasks}
-                           removeTask={removeTask}
                            changeFilter={changeFilter}
                            addTask={addTask}
                            changeTaskStatus={changeStatus}
