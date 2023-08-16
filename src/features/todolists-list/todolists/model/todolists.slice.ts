@@ -1,10 +1,10 @@
-import { RequestStatusType } from "app/app-reducer";
+import { RequestStatusType } from "app/app.slice";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearStateProject } from "common/actions/clearStateAction";
 import { createAppAsyncThunks, handleServerAppError } from "common/utils";
 import { ResultCode } from "common/enums";
 import { thunkTryCatch } from "common/utils/thunk-try-catch";
-import { tasksThunks } from "features/todolists-list/tasks/model/tasks-reducer";
+import { tasksThunks } from "features/todolists-list/tasks/model/tasks.slice";
 import { todolistsAPI, TodolistType } from "features/todolists-list/todolists/api/todolists.api";
 
 const slice = createSlice({
@@ -22,7 +22,7 @@ const slice = createSlice({
    },
    extraReducers: (builder) => {
       builder
-         .addCase(clearStateProject, (state, action) => {
+         .addCase(clearStateProject, () => {
             return [];
          })
          .addCase(removeTodolist.fulfilled, (state, action) => {
@@ -70,7 +70,7 @@ const removeTodolist = createAppAsyncThunks<{ todoId: string }, string>("todolis
 });
 
 const addTodolist = createAppAsyncThunks<{ todolist: TodolistType }, string>("todolists/addTodolists", async (title, thunkAPI) => {
-   const { dispatch, rejectWithValue } = thunkAPI;
+   const { rejectWithValue } = thunkAPI;
 
    return thunkTryCatch(thunkAPI, async () => {
       const res = await todolistsAPI.createTodolist(title);
@@ -110,6 +110,6 @@ export type ChangeTodoTitleArgType = {
    title: string;
 };
 
-export const todolistsReducer = slice.reducer;
+export const todolistsSlice = slice.reducer;
 export const todolistsActions = slice.actions;
 export const todolistsThunk = { removeTodolist, fetchTodolists, addTodolist, changeTodolistTitle };

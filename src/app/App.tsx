@@ -3,17 +3,8 @@ import "./App.css";
 import { ErrorSnackbar } from "common/components/ErrorSnackbar/ErrorSnackbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "features/auth/Login";
-import { authThunks } from "features/auth/auth-reducer";
-import {
-   AppBar,
-   Button,
-   CircularProgress,
-   Container,
-   IconButton,
-   LinearProgress,
-   Toolbar,
-   Typography,
-} from "@mui/material";
+import { authThunks } from "features/auth/auth.slice";
+import { AppBar, Button, CircularProgress, Container, IconButton, LinearProgress, Toolbar, Typography } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 import { selectAppStatus, selectIsInitialized } from "app/app-selectors";
 import { selectAuthIsLoggedIn } from "features/auth/auth-selectors";

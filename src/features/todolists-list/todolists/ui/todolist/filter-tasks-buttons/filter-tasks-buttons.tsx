@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import React, { useCallback, MouseEvent } from "react";
-import { FilterValuesType, TodolistDomainType, todolistsActions } from "features/todolists-list/todolists/model/todolists-reducer";
+import { FilterValuesType, TodolistDomainType, todolistsActions } from "features/todolists-list/todolists/model/todolists.slice";
 import { useActions } from "common/hooks";
 
 type Props = {

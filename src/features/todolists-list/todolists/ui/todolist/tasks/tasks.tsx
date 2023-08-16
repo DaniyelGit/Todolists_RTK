@@ -1,7 +1,7 @@
 import React from "react";
 import { Task } from "features/todolists-list/todolists/ui/todolist/tasks/task/task";
 import { TaskStatuses } from "common/enums";
-import { TodolistDomainType } from "features/todolists-list/todolists/model/todolists-reducer";
+import { TodolistDomainType } from "features/todolists-list/todolists/model/todolists.slice";
 import { useAppSelector } from "common/hooks/useAppSelector";
 import { selectGetTasks } from "features/todolists-list/tasks/model/tasks-selector";
 

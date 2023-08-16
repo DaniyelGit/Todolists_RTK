@@ -1,5 +1,5 @@
 import { instance, ResponseType } from "common/api/common-api";
-import { ChangeTodoTitleArgType } from "features/todolists-list/todolists/model/todolists-reducer";
+import { ChangeTodoTitleArgType } from "features/todolists-list/todolists/model/todolists.slice";
 
 export const todolistsAPI = {
    getTodolists() {

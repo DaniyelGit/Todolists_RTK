@@ -2,7 +2,7 @@ import { EditableSpan } from "common/components/EditableSpan/EditableSpan";
 import { IconButton } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import React, { useCallback } from "react";
-import { TodolistDomainType, todolistsThunk } from "features/todolists-list/todolists/model/todolists-reducer";
+import { TodolistDomainType, todolistsThunk } from "features/todolists-list/todolists/model/todolists.slice";
 import { useActions } from "common/hooks";
 
 type Props = {

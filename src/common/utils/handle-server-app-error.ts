@@ -1,6 +1,6 @@
 import { ResponseType } from "common/api/common-api";
 import { Dispatch } from "redux";
-import { appActions } from "app/app-reducer";
+import { appActions } from "app/app.slice";
 
 /**
  * Обрабатывает ошибку, полученную от сервера, и обновляет состояния приложения

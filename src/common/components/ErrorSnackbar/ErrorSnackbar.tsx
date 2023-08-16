@@ -1,7 +1,7 @@
 import React from "react";
 import { AlertProps, Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
-import { appActions } from "app/app-reducer";
+import { appActions } from "app/app.slice";
 import { selectAppError } from "app/app-selectors";
 import { useAppSelector } from "common/hooks/useAppSelector";
 import { useActions } from "common/hooks";

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { todolistsThunk } from "features/todolists-list/todolists/model/todolists-reducer";
+import { todolistsThunk } from "features/todolists-list/todolists/model/todolists.slice";
 import { Grid, Paper } from "@mui/material";
 import { AddItemForm } from "common/components/AddItemForm/AddItemForm";
 import { Navigate } from "react-router-dom";

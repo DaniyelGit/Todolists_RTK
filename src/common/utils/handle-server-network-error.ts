@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { isAxiosError } from "axios";
-import { appActions } from "app/app-reducer";
+import { appActions } from "app/app.slice";
 
 /**
  * Обрабатывает ошибки сети, возникающие при отправке запросов на сервер

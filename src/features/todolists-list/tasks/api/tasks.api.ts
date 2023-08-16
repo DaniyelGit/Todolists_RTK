@@ -1,11 +1,6 @@
 import { instance, ResponseType } from "common/api/common-api";
-import {
-   GetTasksResponse,
-   RemoveTaskArgType,
-   TaskType,
-   UpdateTaskModelType,
-} from "features/todolists-list/tasks/api/tasks.api.types";
-import { AddTasksArgType } from "features/todolists-list/tasks/model/tasks-reducer";
+import { GetTasksResponse, RemoveTaskArgType, TaskType, UpdateTaskModelType } from "features/todolists-list/tasks/api/tasks.api.types";
+import { AddTasksArgType } from "features/todolists-list/tasks/model/tasks.slice";
 
 export const tasksApi = {
    getTasks(todolistId: string) {

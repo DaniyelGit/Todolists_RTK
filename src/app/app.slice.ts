@@ -25,5 +25,5 @@ const slice = createSlice({
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
 export type AppInitialStateType = typeof initialState;
 
-export const appReducer = slice.reducer;
+export const appSlice = slice.reducer;
 export const appActions = slice.actions;
