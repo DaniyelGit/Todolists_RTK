@@ -78,8 +78,7 @@ const addTodolist = createAppAsyncThunks<{ todolist: TodolistType }, string>("to
       if (res.data.resultCode === ResultCode.OK) {
          return { todolist: res.data.data.item };
       } else {
-         handleServerAppError(res.data, dispatch);
-         return rejectWithValue(null);
+         return rejectWithValue(res.data);
       }
    });
 });
