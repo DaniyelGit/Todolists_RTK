@@ -61,7 +61,7 @@ const fetchTasks = createAppAsyncThunks<{ tasks: TaskType[]; todoId: string }, s
 });
 
 const addTask = createAppAsyncThunks<{ task: TaskType }, AddTasksArgType>("tasks/addTask", async (arg, thunkAPI) => {
-   const { dispatch, rejectWithValue } = thunkAPI;
+   const { rejectWithValue } = thunkAPI;
 
    return thunkTryCatch(thunkAPI, async () => {
       const res = await tasksApi.createTask(arg);
@@ -70,8 +70,7 @@ const addTask = createAppAsyncThunks<{ task: TaskType }, AddTasksArgType>("tasks
          const task = res.data.data.item;
          return { task };
       } else {
-         handleServerAppError(res.data, dispatch);
-         return rejectWithValue(null);
+         return rejectWithValue(res.data);
       }
    });
 });
