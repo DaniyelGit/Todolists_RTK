@@ -19,11 +19,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
    const tasks = useAppSelector(selectGetTasks);
    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
 
-   const {
-      fetchTodolists: fetchTodolistsThunk,
-      changeTodolistTitle: changeTodolistTitleThunk,
-      addTodolist: addTodolistThunk,
-   } = useActions(todolistsThunk);
+   const { fetchTodolists: fetchTodolistsThunk, addTodolist: addTodolistThunk } = useActions(todolistsThunk);
 
    useEffect(() => {
       if (demo || !isLoggedIn) {
@@ -47,12 +43,12 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
          </Grid>
          <Grid container spacing={3}>
             {todolists.map((tl) => {
-               let allTodolistTasks = tasks[tl.id];
+               let allTasksTodolist = tasks[tl.id];
 
                return (
                   <Grid item key={tl.id}>
                      <Paper style={{ padding: "10px" }}>
-                        <Todolist todolist={tl} tasks={allTodolistTasks} demo={demo} />
+                        <Todolist todolist={tl} tasks={allTasksTodolist} demo={demo} />
                      </Paper>
                   </Grid>
                );
