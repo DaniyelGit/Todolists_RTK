@@ -2,13 +2,13 @@ import React, { useCallback, useEffect } from "react";
 import { todolistsThunk } from "features/todolists-list/todolists/model/todolists-reducer";
 import { Grid, Paper } from "@mui/material";
 import { AddItemForm } from "common/components/AddItemForm/AddItemForm";
-import { Todolist } from "./todolists/ui/Todolist/Todolist";
 import { Navigate } from "react-router-dom";
 import { selectAuthIsLoggedIn } from "features/auth/auth-selectors";
 import { useAppSelector } from "common/hooks/useAppSelector";
 import { useActions } from "common/hooks";
 import { selectGetTodolists } from "features/todolists-list/todolists/model/todolists-selector";
 import { selectGetTasks } from "features/todolists-list/tasks/model/tasks-selector";
+import { Todolist } from "features/todolists-list/todolists/ui/todolist/Todolist";
 
 type PropsType = {
    demo?: boolean;

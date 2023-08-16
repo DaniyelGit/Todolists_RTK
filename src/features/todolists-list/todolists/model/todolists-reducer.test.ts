@@ -33,13 +33,13 @@ test("correct todolist should be removed", () => {
 
 test("correct todolist should be added", () => {
    let testTodolist: TodolistType = {
-      title: "New Todolist",
+      title: "New todolist",
       id: "any id",
       addedDate: "",
       order: 0,
    };
 
-   const action = todolistsThunk.addTodolist.fulfilled({ todolist: testTodolist }, "requestId", "New Todolist");
+   const action = todolistsThunk.addTodolist.fulfilled({ todolist: testTodolist }, "requestId", "New todolist");
 
    const endState = todolistsReducer(startState, action);
 
@@ -49,7 +49,7 @@ test("correct todolist should be added", () => {
 });
 
 test("correct todolist should change its name", () => {
-   let newTodolistTitle = "New Todolist";
+   let newTodolistTitle = "New todolist";
 
    const action = todolistsThunk.changeTodolistTitle.fulfilled({ todoId: todolistId2, title: newTodolistTitle }, "requestId", {
       todoId: todolistId2,
