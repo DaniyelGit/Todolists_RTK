@@ -45,13 +45,14 @@ const slice = createSlice({
             },
             (state, action) => {
                state.status = "failed";
-               debugger;
-               // if (action.type.includes("addTodolist")) return;
 
-               if (action.payload) {
-                  state.error = action.payload.data.messages[0];
+               const { payload, error } = action;
+               if (payload) {
+                  if (payload.showGlobalError) {
+                     state.error = payload.data.messages.length ? payload.data.messages[0] : "Some error occurred";
+                  }
                } else {
-                  state.error = action.error.message ? action.error.message : "Some error occurred";
+                  state.error = error.message ? action.error.message : "Some error occurred";
                }
             }
          );

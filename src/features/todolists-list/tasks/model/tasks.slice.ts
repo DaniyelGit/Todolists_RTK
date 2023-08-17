@@ -66,7 +66,7 @@ const addTask = createAppAsyncThunks<{ task: TaskType }, AddTasksArgType>("tasks
       const task = res.data.data.item;
       return { task };
    } else {
-      return rejectWithValue({ data: res.data, showGlobalError: true });
+      return rejectWithValue({ data: res.data, showGlobalError: false });
    }
 });
 
