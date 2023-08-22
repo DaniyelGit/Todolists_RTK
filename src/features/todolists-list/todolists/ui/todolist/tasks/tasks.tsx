@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Task } from "features/todolists-list/todolists/ui/todolist/tasks/task/task";
 import { TaskStatuses } from "common/enums";
 import { TodolistDomainType } from "features/todolists-list/todolists/model/todolists.slice";
@@ -9,7 +9,7 @@ type Props = {
    todolist: TodolistDomainType;
 };
 
-export const Tasks = ({ todolist }: Props) => {
+export const Tasks: FC<Props> = ({ todolist }) => {
    const tasks = useAppSelector(selectGetTasks)[todolist.id];
 
    let tasksForTodolist = tasks;

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, FC } from "react";
 import { Checkbox, IconButton } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { EditableSpan } from "common/components/EditableSpan/EditableSpan";
@@ -13,7 +13,7 @@ type Props = {
    todolistId: string;
 };
 
-export const Task = React.memo(({ task, todolistId }: Props) => {
+export const Task: FC<Props> = React.memo(({ task, todolistId }) => {
    const { removeTask: removeTaskThunk, updateTask: updateTaskThunk } = useActions(tasksThunks);
 
    const removeTaskHandler = () => {

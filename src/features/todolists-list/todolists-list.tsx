@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import { todolistsThunk } from "features/todolists-list/todolists/model/todolists.slice";
 import { Grid, Paper } from "@mui/material";
 import { AddItemForm } from "common/components/AddItemForm/AddItemForm";
@@ -9,11 +9,11 @@ import { useActions } from "common/hooks";
 import { selectGetTodolists } from "features/todolists-list/todolists/model/todolists-selector";
 import { Todolist } from "features/todolists-list/todolists/ui/todolist/Todolist";
 
-type PropsType = {
+type Props = {
    demo?: boolean;
 };
 
-export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
+export const TodolistsList: FC<Props> = ({ demo = false }) => {
    const todolists = useAppSelector(selectGetTodolists);
    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
 

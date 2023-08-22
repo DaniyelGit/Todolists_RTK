@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import "./App.css";
 import { ErrorSnackbar } from "common/components/ErrorSnackbar/ErrorSnackbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -8,16 +8,15 @@ import { AppBar, Button, CircularProgress, Container, IconButton, LinearProgress
 import { Menu } from "@mui/icons-material";
 import { selectAppStatus, selectIsInitialized } from "app/app-selectors";
 import { selectAuthIsLoggedIn } from "features/auth/auth-selectors";
-import { useAppDispatch } from "common/hooks/useAppDispatch";
 import { useAppSelector } from "common/hooks/useAppSelector";
 import { useActions } from "common/hooks";
 import { TodolistsList } from "features/todolists-list/todolists-list";
 
-type PropsType = {
+type Props = {
    demo?: boolean;
 };
 
-function App({ demo = false }: PropsType) {
+export const App: FC<Props> = ({ demo }) => {
    const status = useAppSelector(selectAppStatus);
    const isInitialized = useAppSelector(selectIsInitialized);
    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
@@ -67,6 +66,6 @@ function App({ demo = false }: PropsType) {
          </div>
       </BrowserRouter>
    );
-}
+};
 
 export default App;

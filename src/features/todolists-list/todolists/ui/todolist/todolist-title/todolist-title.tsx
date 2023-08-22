@@ -1,7 +1,7 @@
 import { EditableSpan } from "common/components/EditableSpan/EditableSpan";
 import { IconButton } from "@mui/material";
 import { Delete } from "@mui/icons-material";
-import React, { useCallback } from "react";
+import React, { FC, useCallback } from "react";
 import { TodolistDomainType, todolistsThunk } from "features/todolists-list/todolists/model/todolists.slice";
 import { useActions } from "common/hooks";
 
@@ -9,7 +9,7 @@ type Props = {
    todolist: TodolistDomainType;
 };
 
-export const TodolistTitle = ({ todolist }: Props) => {
+export const TodolistTitle: FC<Props> = ({ todolist }) => {
    const { removeTodolist: removeTodolistThunk, changeTodolistTitle: changeTodolistTitleThunk } = useActions(todolistsThunk);
 
    const removeTodolistHandler = () => {

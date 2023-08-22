@@ -1,11 +1,11 @@
-import React from "react";
+import React, { FC } from "react";
 import { Navigate } from "react-router-dom";
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from "@mui/material";
 import { selectAuthIsLoggedIn } from "features/auth/auth-selectors";
 import { useAppSelector } from "common/hooks/useAppSelector";
 import { useLogin } from "features/auth/lib/useLogin";
 
-export const Login = () => {
+export const Login: FC = () => {
    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
 
    const { formik } = useLogin();
@@ -33,25 +33,13 @@ export const Login = () => {
                   <FormGroup>
                      <TextField label="Email" margin="normal" {...formik.getFieldProps("email")} />
                      {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}
-                     <TextField
-                        type="password"
-                        label="Password"
-                        margin="normal"
-                        {...formik.getFieldProps("password")}
-                     />
+                     <TextField type="password" label="Password" margin="normal" {...formik.getFieldProps("password")} />
                      {formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}
                      <FormControlLabel
                         label={"Remember me"}
-                        control={
-                           <Checkbox {...formik.getFieldProps("rememberMe")} checked={formik.values.rememberMe} />
-                        }
+                        control={<Checkbox {...formik.getFieldProps("rememberMe")} checked={formik.values.rememberMe} />}
                      />
-                     <Button
-                        type={"submit"}
-                        variant={"contained"}
-                        color={"primary"}
-                        disabled={formik.isSubmitting || !formik.isValid}
-                     >
+                     <Button type={"submit"} variant={"contained"} color={"primary"} disabled={formik.isSubmitting || !formik.isValid}>
                         Login
                      </Button>
                   </FormGroup>

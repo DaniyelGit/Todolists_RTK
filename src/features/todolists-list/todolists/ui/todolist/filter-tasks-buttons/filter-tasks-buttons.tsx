@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React, { useCallback, MouseEvent } from "react";
+import React, { useCallback, MouseEvent, FC } from "react";
 import { FilterValuesType, TodolistDomainType, todolistsActions } from "features/todolists-list/todolists/model/todolists.slice";
 import { useActions } from "common/hooks";
 
@@ -7,7 +7,7 @@ type Props = {
    todolist: TodolistDomainType;
 };
 
-export const FilterTasksButtons = ({ todolist }: Props) => {
+export const FilterTasksButtons: FC<Props> = ({ todolist }) => {
    const { changeTodolistFilter } = useActions(todolistsActions);
 
    const changeTasksFilterHandler = useCallback(
