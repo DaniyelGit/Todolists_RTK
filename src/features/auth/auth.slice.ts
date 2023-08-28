@@ -40,7 +40,6 @@ export const loginTC = createAppAsyncThunks<{ isLoggedIn: boolean }, LoginParams
 
 export const logoutTC = createAppAsyncThunks<{ isLoggedIn: boolean }, undefined>("auth/logout", async (_, thunkAPI) => {
    const { dispatch, rejectWithValue } = thunkAPI;
-
    const res = await authAPI.logout();
    if (res.data.resultCode === ResultCode.OK) {
       dispatch(clearStateProject());

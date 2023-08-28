@@ -1,34 +1,27 @@
-import React, { FC, useCallback, useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import "./App.css";
 import { ErrorSnackbar } from "common/components/ErrorSnackbar/ErrorSnackbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "features/auth/Login";
 import { authThunks } from "features/auth/auth.slice";
-import { AppBar, Button, CircularProgress, Container, IconButton, LinearProgress, Toolbar, Typography } from "@mui/material";
-import { Menu } from "@mui/icons-material";
-import { selectAppStatus, selectIsInitialized } from "app/app-selectors";
-import { selectAuthIsLoggedIn } from "features/auth/auth-selectors";
+import { CircularProgress, Container } from "@mui/material";
+import { selectIsInitialized } from "app/app-selectors";
 import { useAppSelector } from "common/hooks/useAppSelector";
 import { useActions } from "common/hooks";
 import { TodolistsList } from "features/todolists-list/todolists-list";
+import { Header } from "features/header/header";
 
 type Props = {
    demo?: boolean;
 };
 
 export const App: FC<Props> = ({ demo }) => {
-   const status = useAppSelector(selectAppStatus);
    const isInitialized = useAppSelector(selectIsInitialized);
-   const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
 
-   const { logoutTC, initializeAppTC } = useActions(authThunks);
+   const { initializeAppTC } = useActions(authThunks);
 
    useEffect(() => {
       initializeAppTC();
-   }, []);
-
-   const logoutHandler = useCallback(() => {
-      logoutTC();
    }, []);
 
    if (!isInitialized) {
@@ -43,20 +36,7 @@ export const App: FC<Props> = ({ demo }) => {
       <BrowserRouter>
          <div className="App">
             <ErrorSnackbar />
-            <AppBar position="static">
-               <Toolbar>
-                  <IconButton edge="start" color="inherit" aria-label="menu">
-                     <Menu />
-                  </IconButton>
-                  <Typography variant="h6">News</Typography>
-                  {isLoggedIn && (
-                     <Button color="inherit" onClick={logoutHandler}>
-                        Log out
-                     </Button>
-                  )}
-               </Toolbar>
-               {status === "loading" && <LinearProgress />}
-            </AppBar>
+            <Header />
             <Container fixed>
                <Routes>
                   <Route path={"/"} element={<TodolistsList demo={demo} />} />
