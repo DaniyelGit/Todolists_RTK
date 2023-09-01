@@ -23,6 +23,7 @@ const slice = createSlice({
          .addMatcher(
             // pending
             (action: AnyAction) => {
+               debugger;
                return action.type.endsWith("/pending");
             },
             (state, action) => {

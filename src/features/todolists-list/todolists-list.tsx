@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { todolistsThunk } from "features/todolists-list/todolists/model/todolists.slice";
 import { Grid, Paper } from "@mui/material";
 import { AddItemForm } from "common/components/AddItemForm/AddItemForm";
@@ -26,9 +26,9 @@ export const TodolistsList: FC<Props> = ({ demo = false }) => {
       fetchTodolistsThunk();
    }, []);
 
-   const addTodolistCallBack = useCallback((title: string) => {
+   const addTodolistCallBack = (title: string) => {
       return addTodolistThunk(title).unwrap();
-   }, []);
+   };
 
    if (!isLoggedIn) {
       return <Navigate to={"/login"} />;
